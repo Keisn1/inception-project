@@ -1,7 +1,15 @@
 services:
   nginx:
     build:
-      context: ./requirements/nginx
-      dockerfile: Dockerfile
-    image: nginx
-    container_name: nginx-container
+      context: .
+      dockerfile: requirements/nginx/Dockerfile
+    container_name: nginx
+    #    depends_on:
+    #      - wordpress
+    ports:
+      - "443:443"
+    volumes:
+      - ./requirements/nginx/conf/:/etc/nginx/http.d/
+      - ./requirements/nginx/tools:/etc/nginx/ssl/
+      - ./requirements/nginx/simple_docker_nginx_html/public/html:/var/www/
+    restart: always
