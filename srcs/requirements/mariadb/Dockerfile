@@ -1,4 +1,4 @@
-FROM alpine:3.22
+FROM alpine:3.21
 
     # using ARG instead of ENV because ARG will only live during image build
 ARG DB_NAME \
