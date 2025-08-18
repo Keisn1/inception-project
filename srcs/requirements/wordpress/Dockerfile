@@ -23,8 +23,8 @@ RUN apk update && apk upgrade && apk add --no-cache \
     unzip
 
 RUN sed -i "s|listen = 127.0.0.1:9000|listen = 9000|g" /etc/php${PHP_VERSION}/php-fpm.d/www.conf && \
-#     # sed -i "s|;listen.owner = nobody|listen.owner = nobody|g" /etc/php8/php-fpm.d/www.conf && \
-#     # sed -i "s|;listen.group = nobody|listen.group = nobody|g" /etc/php8/php-fpm.d/www.conf && \
+    # sed -i "s|;listen.owner = nobody|listen.owner = nobody|g" /etc/php${PHP_VERSION}/php-fpm.d/www.conf && \
+    # sed -i "s|;listen.group = nobody|listen.group = nobody|g" /etc/php${PHP_VERSION}/php-fpm.d/www.conf && \
     rm -f /var/cache/apk/*
 
 WORKDIR /var/www
@@ -49,6 +49,9 @@ RUN chown -R wordpress:wordpress /var/www/wp-content
 # Files: 644 (owner can read/write, others can read only)
 RUN find /var/www/wp-content -type d -exec chmod 755 {} \; && \
     find /var/www/wp-content -type f -exec chmod 644 {} \;
+
+RUN mkdir -p /var/log/php${PHP_VERSION} && \
+    chown -R wordpress:wordpress /var/log/php${PHP_VERSION}
 
 USER wordpress
 
